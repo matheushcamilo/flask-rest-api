@@ -1,5 +1,8 @@
+from this import s
 from flask import Flask
 import os
+from src.auth import auth
+from src.storeitems import storeitems
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
 
@@ -10,12 +13,6 @@ def create_app(test_config=None):
     else:
         app.config.from_mapping(test_config)    
 
-    @app.get('/')
-    def home():
-        return "First basic structure of Flask"
-
-    @app.get('/json-home')    
-    def json_home():
-        return {"message": "First basic structure of Flask"}
-    
+    app.register_blueprint(auth)
+    app.register_blueprint(storeitems)
     return app
